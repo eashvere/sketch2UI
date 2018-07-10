@@ -18,9 +18,14 @@ def predict_result(image):
     # Ensure the request was successful.
     if r['success']:
         # Loop over the predictions and display them.
-        for (i, result) in enumerate(r['predictions']):
-            print('{}. {}: {:.4f}'.format(i + 1, result['label'],
-                                          result['probability']))
+        labels = []
+        boxes = []
+        flipped = []
+        for image in r['prediction']:
+            labels.append(image['label'])
+            boxes.append(image['bounding_boxes'])
+            flipped.append(image['flipped'])
+        return labels, boxes, flipped
     # Otherwise, the request failed.
     else:
         print('Request failed')
