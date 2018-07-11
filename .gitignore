@@ -1,0 +1,5 @@
+.idea/
+
+#The large model files should be ignored
+deploy/models/vgg16_faster_rcnn_iter_60000.pkl
+deploy/models/vgg16_faster_rcnn_iter_60000.pth

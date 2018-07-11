@@ -3,15 +3,18 @@
 
 import io
 import json
-
+import numpy as np
 import flask
 import torch
-from torch import topk
 import torch.nn.functional as F
 from PIL import Image
 from torch import nn
 from torchvision import transforms as T
 from torchvision.models import resnet50
+import cv2
+
+from lib.nets.vgg16 import vgg16
+from lib.model.test import im_detect
 
 model_path = ""
 
@@ -22,16 +25,22 @@ use_gpu = True
 
 tags = ['ButtonCircle', 'ButtonSquare', 'Text', 'TextInput', 'ImageView', 'RadioButton', 'CheckBox']
 
+model_path = "./deploy/models/vgg16_faster_rcnn_iter_60000.pth"
+
 def load_model():
     """Load the pre-trained model, you can use your model just as easily.
 
     """
     global model
-    model = torch.load(model_path)
+    
+    model = vgg16()
+    model.create_architecture(8,tag='default', anchor_scales=[8, 16, 32])
+    #model.load_pretrained_cnn('./webapp/var/www/models/vgg16_faster_rcnn_iter_60000.pkl')
+    model.load_state_dict(torch.load(model_path, map_location=lambda storage, loc: storage))
     model.eval()
-    if use_gpu:
-        model.cuda()
-
+    if not torch.cuda.is_available():
+        model._device = 'cpu'
+    model.to(model._device)
 
 def prepare_image(image, target_size):
     """Do image preprocessing before prediction on any data.
@@ -70,24 +79,24 @@ def predict():
             # Read the image in PIL format
             image = flask.request.files["image"].read()
             image = Image.open(io.BytesIO(image))
+            image = np.array(image)
+            
 
             # Preprocess the image and prepare it for classification.
-            image = prepare_image(image, target_size=(500, 500))
+            #image = prepare_image(image, target_size=(500, 500))
 
             # Classify the input image and then initialize the list of predictions to return to the client.
-            preds = F.softmax(model(image), dim=1)
-            results = torch.topk(preds.cpu().data, k=3, dim=1)
+            scores, boxes = im_detect(model, image)
 
             data['predictions'] = list()
 
             # Loop over the results and add them to the list of returned predictions
-            for prob, label in zip(results[0][0], results[1][0]):
-                label_name = tags[label]
-                r = {"label": label_name, "probability": float(prob)}
-                data['predictions'].append(r)
+            r = {"labels":scores.tolist(), "boxes": boxes.tolist()}
+            data['predictions'].append(r)
 
             # Indicate that the request was a success.
             data["success"] = True
+            #print(data)
 
     # Return the data dictionary as a JSON response.
     return flask.jsonify(data)
@@ -97,4 +106,4 @@ if __name__ == '__main__':
     print("Loading PyTorch model and Flask starting server ...")
     print("Please wait until server has fully started")
     load_model()
-    app.run()
+    app.run(port=4000)
