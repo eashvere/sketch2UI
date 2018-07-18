@@ -3,12 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <h3>Label Results: {{ label }}</h3>
-    <h3>Bounding Boxes: {{ box }}</h3>
+    <p><img src="data:image/png;base64, {{image_data}}" alt="Image" width=500 height=500></p>
 
     <form action='/'>
         <p><input type="submit" value="Go Home"/></p>

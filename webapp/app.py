@@ -30,7 +30,7 @@ def predict_result(image_path):
     # Ensure the request was successful.
     if r['success']:
         # Loop over the predictions and display them.
-        return r['predictions'][0]['labels'], r['predictions'][0]['labels']
+        return r['predictions'][0]['labels'], r['predictions'][0]['labels'], r['predictions'][0]['visual']
     # Otherwise, the request failed.
     else:
         print('Request failed')
@@ -59,8 +59,8 @@ def predict():
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
             print(file_path)
-            label, box = predict_result(file_path)
-            return render_template('result.html', label=label, box=box)
+            label, box, visual = predict_result(file_path)
+            return render_template('result.html', image_data=visual)
 
 
     return redirect('/')

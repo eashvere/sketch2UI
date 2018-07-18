@@ -15,6 +15,7 @@ import cv2
 
 from lib.nets.vgg16 import vgg16
 from lib.model.test import im_detect
+from visual import create_plot
 
 model_path = ""
 
@@ -25,7 +26,7 @@ use_gpu = True
 
 tags = ['ButtonCircle', 'ButtonSquare', 'Text', 'TextInput', 'ImageView', 'RadioButton', 'CheckBox']
 
-model_path = "./deploy/models/vgg16_faster_rcnn_iter_60000.pth"
+model_path = "./models/vgg16_faster_rcnn_iter_60000.pth"
 
 def load_model():
     """Load the pre-trained model, you can use your model just as easily.
@@ -87,11 +88,12 @@ def predict():
 
             # Classify the input image and then initialize the list of predictions to return to the client.
             scores, boxes = im_detect(model, image)
+            png_visual = create_plot(scores, boxes, image)
 
             data['predictions'] = list()
 
             # Loop over the results and add them to the list of returned predictions
-            r = {"labels":scores.tolist(), "boxes": boxes.tolist()}
+            r = {"labels":scores.tolist(), "boxes": boxes.tolist(), "visual":png_visual.decode('utf-8')}
             data['predictions'].append(r)
 
             # Indicate that the request was a success.
