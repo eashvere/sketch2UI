@@ -1,21 +1,73 @@
 <!DOCTYPE html>
 <html>
+
+<style>
+
+#center-div{
+    margin: 0 auto;
+    width: 100px;
+    padding: fixed;
+}
+
+input[type=button], input[type=submit], input[type=reset], input[type=file] {
+    background-color: #01fc0152;
+    border: none;
+    color: rgba(0,0,0,0);
+    padding: 30px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+#button {
+    border:None;
+    background-color: #01fc0152;
+    color: rgba(15, 36, 224, 0.699);
+    padding: 30px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+</style>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />-->
-    <!--<script src="main.js"></script>-->
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <!--<script src="../static/main.js"></script>-->
 </head>
 <body>
-    <form action="/predict" method="POST" enctype="multipart/form-data">
-        <div>
-            <label for="file">Choose sketch to upload</label>
-            <input type="file" id="file" name="file" multiple>
+    <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
+        <div id="center-div">
+            <input type="file" id="imgInp" name="file" multiple>
+            <img id="blah" src="#" alt="your image" />
+
+            <script type="text/javascript">
+                function readURL(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        
+                        reader.onload = function (e) {
+                            $('#blah').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                $("#imgInp").change(function(){
+                    readURL(this);
+                });
+            </script>
         </div>
-        <div>
-            <button>Submit</button>
+        <div id="center-div">
+            <button id="button">Submit</button>
         </div>
     </form>
 </body>

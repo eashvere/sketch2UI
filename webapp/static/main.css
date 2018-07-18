@@ -1,0 +1,31 @@
+/* main.css */
+
+html{
+    min-height: 100%;
+}
+
+body{
+    background: -webkit-linear-gradient(left, #99ff99, #3399ff); /*Chrome*/
+    background: -o-linear-gradient(right, #99ff99, #3399ff); /*Opera*/
+    background: -moz-linear-gradient(right, #99ff99, #3399ff); /*FireFox*/
+    background: linear-gradient(to right, #99ff99, #3399ff);
+    background-color: #99ff99;
+}
+
+/* IDS */
+
+#center-div{
+    margin: 0 auto;
+    width: 100px;
+}
+
+#button {
+    border:None;
+    background-color: #ff5050;
+    color: rgba(123, 15, 224, 0.5);
+    padding: 30px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
