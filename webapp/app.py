@@ -18,6 +18,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 PyTorch_REST_API_URL = 'http://127.0.0.1:4000/predict'
 
+extra_dirs = ['templates/', 'static/']
+extra_files = extra_dirs[:]
+for extra_dir in extra_dirs:
+    for dirname, dirs, files in os.walk(extra_dir):
+        for filename in files:
+            filename = os.path.join(dirname, filename)
+            if os.path.isfile(filename):
+                extra_files.append(filename)
+
 def predict_result(image_path):
     # Initialize image path
     image = open(image_path, 'rb').read()

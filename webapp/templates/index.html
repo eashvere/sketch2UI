@@ -4,15 +4,34 @@
 <style>
 
 #center-div{
-    margin: 0 auto;
-    width: 100px;
-    padding: fixed;
+    position:fixed;
+    bottom:100px;
+    right:900px;
 }
 
-input[type=button], input[type=submit], input[type=reset], input[type=file] {
-    background-color: #01fc0152;
-    border: none;
+#submit_button{
+    position:fixed;
+    bottom:100px;
+    right:500px;
+
+}
+#img_div{
+    position:fixed;
+    top:50px;
+    right:500px;
+}
+
+#upload-photo{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
     color: rgba(0,0,0,0);
+}
+#submit-button-label {
+    cursor: pointer;
+    background-color: #01fc0152;
+    color: rgba(15, 36, 224, 0.699);
+    border: none;
     padding: 30px 64px;
     text-align: center;
     text-decoration: none;
@@ -22,7 +41,7 @@ input[type=button], input[type=submit], input[type=reset], input[type=file] {
 }
 
 
-#button {
+.button {
     border:None;
     background-color: #01fc0152;
     color: rgba(15, 36, 224, 0.699);
@@ -31,7 +50,18 @@ input[type=button], input[type=submit], input[type=reset], input[type=file] {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
 }
+
+img{
+    display:None;
+}
+
+#img-label{
+    display:None;
+    color: rgba(2, 27, 248, 0)
+}
+
 
 </style>
 
@@ -42,33 +72,39 @@ input[type=button], input[type=submit], input[type=reset], input[type=file] {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <!--<script src="../static/main.js"></script>-->
+    <script src="../static/main.js"></script>
 </head>
 <body>
     <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
         <div id="center-div">
-            <input type="file" id="imgInp" name="file" multiple>
-            <img id="blah" src="#" alt="your image" />
-
-            <script type="text/javascript">
-                function readURL(input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        
-                        reader.onload = function (e) {
-                            $('#blah').attr('src', e.target.result);
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
-                $("#imgInp").change(function(){
-                    readURL(this);
-                });
-            </script>
-        </div>
-        <div id="center-div">
-            <button id="button">Submit</button>
+            <label for="upload-photo" id="submit-button-label">Browse...</label>
+            <input type="file" id="upload-photo" name="photo" multiple>
         </div>
     </form>
+    <div id="img_div">
+        <label id="img-label">Image:</label>
+        <img id="blah" src="#" alt="your image" />
+
+        <script type="text/javascript">
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function (e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("#upload-photo").change(function(){
+                readURL(this);
+                document.getElementById("blah").style.display = "inline-block";
+                document.getElementById("img-label").style.display = "inline-block";
+            });
+        </script>
+    </div>
+    <div id="submit_button">
+        <button class="button" >Submit</button>
+    </div>
 </body>
 </html>

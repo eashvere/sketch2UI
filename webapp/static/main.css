@@ -12,20 +12,5 @@ body{
     background-color: #99ff99;
 }
 
+
 /* IDS */
-
-#center-div{
-    margin: 0 auto;
-    width: 100px;
-}
-
-#button {
-    border:None;
-    background-color: #01fc0152;
-    color: rgba(15, 36, 224, 0.699);
-    padding: 30px 64px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
