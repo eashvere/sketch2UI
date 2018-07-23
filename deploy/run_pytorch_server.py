@@ -1,6 +1,7 @@
 # encoding: utf-8
 # Borrowed from https://github.com/L1aoXingyu/deploy-pytorch-model
 
+import os
 import io
 import json
 import numpy as np
@@ -12,21 +13,93 @@ from torch import nn
 from torchvision import transforms as T
 from torchvision.models import resnet50
 import cv2
+import redis
+import base64
+import uuid
+import time
+from threading import Thread
+import sys
 
 from lib.nets.vgg16 import vgg16
 from lib.model.test import im_detect
-from visual import create_plot
-
-model_path = ""
 
 # Initialize our Flask application and the PyTorch model.
+IMAGE_WIDTH = 250
+IMAGE_HEIGHT = 250
+IMAGE_CHANS = 3
+IMAGE_DTYPE = "uint8"
+
+# initialize constants used for server queuing
+IMAGE_QUEUE = "image_queue"
+BATCH_SIZE = 32
+SERVER_SLEEP = 0.25
+CLIENT_SLEEP = 0.25
+
+# initialize our Flask application, Redis server, and Keras model
 app = flask.Flask(__name__)
+db = redis.StrictRedis(host="localhost", port=6379, db=0)
 model = None
-use_gpu = True
 
 tags = ['ButtonCircle', 'ButtonSquare', 'Text', 'TextInput', 'ImageView', 'RadioButton', 'CheckBox']
 
-model_path = "./models/vgg16_faster_rcnn_iter_60000.pth"
+model_path = "/Users/eash/Desktop/pytorch-faster-rcnn-master/vgg16_faster_rcnn_iter_60000.pth"
+
+def base64_encode_image(a):
+    return base64.b64encode(a.tobytes()).decode('utf-8')
+
+def base64_decode_image(a, dtype):
+    if sys.version_info.major == 3:
+        a = bytes(a, encoding="utf-8")
+
+	# convert the string to a NumPy array using the supplied data
+	# type and target shape
+    a = np.frombuffer(base64.decodestring(a), dtype)
+
+    a = np.reshape(a, (500, 500, 3))
+    #print(a)
+    #a = cv2.resize(a, (500, 500))
+
+    return a
+
+def classify_process():
+
+    load_model()
+    print("Done LOADING!")
+
+    while True:
+        queue = db.lrange(IMAGE_QUEUE, 0, BATCH_SIZE-1)
+        imageIDs = []
+        batch = None
+
+        for q in queue:
+            q = json.loads(q.decode("utf-8"))
+            #print(type(q["image"]))
+            image = base64_decode_image(q["image"], IMAGE_DTYPE)
+            
+            if batch is None:
+                batch = image
+            else:
+                batch.vstack([batch, image])
+
+            imageIDs.append(q["id"])
+
+        if len(imageIDs) > 0:
+            results = [im_detect(model, image)]
+
+            for (imageID, ans) in zip(imageIDs, results):
+                #print(ans)
+                output = []
+                scores = ans[0]
+                boxes = ans[1]
+                print("Scores:", scores)
+                print("Boxes: ", boxes)
+                r = {"labels": scores.tolist(), "boxes": boxes.tolist()}
+                output.append(r)
+
+                db.set(imageID, json.dumps(output))
+            db.ltrim(IMAGE_QUEUE, len(imageIDs), -1)
+
+        time.sleep(SERVER_SLEEP)
 
 def load_model():
     """Load the pre-trained model, you can use your model just as easily.
@@ -43,32 +116,6 @@ def load_model():
         model._device = 'cpu'
     model.to(model._device)
 
-def prepare_image(image, target_size):
-    """Do image preprocessing before prediction on any data.
-
-    :param image:       original image
-    :param target_size: target image size
-    :return:
-                        preprocessed image
-    """
-
-    if image.mode != 'RGB':
-        image = image.convert("RGB")
-
-    # Resize the input image nad preprocess it.
-    image = T.Resize(target_size)(image)
-    image = T.ToTensor()(image)
-
-    # Convert to Torch.Tensor and normalize.
-    #image = T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])(image)
-
-    # Add batch_size axis.
-    image = image[None]
-    if use_gpu:
-        image = image.cuda()
-    return torch.autograd.Variable(image, volatile=True)
-
-
 @app.route("/predict", methods=["POST"])
 def predict():
     # Initialize the data dictionary that will be returned from the view.
@@ -81,31 +128,42 @@ def predict():
             image = flask.request.files["image"].read()
             image = Image.open(io.BytesIO(image))
             image = np.array(image)
-            
+            #print(image.dtype)
+            image = cv2.resize(image, (500, 500))
+            #print(image.shape)
+            image = image.copy(order='C')
 
-            # Preprocess the image and prepare it for classification.
-            #image = prepare_image(image, target_size=(500, 500))
+            k = str(uuid.uuid4())
+            d = {"id": k, "image": base64_encode_image(image)}
+            db.rpush(IMAGE_QUEUE, json.dumps(d))
 
-            # Classify the input image and then initialize the list of predictions to return to the client.
-            scores, boxes = im_detect(model, image)
-            png_visual = create_plot(scores, boxes, image)
+            # keep looping until our model server returns the output
+			# predictions
+            while True:
+                output = db.get(k)
 
-            data['predictions'] = list()
-
-            # Loop over the results and add them to the list of returned predictions
-            r = {"labels":scores.tolist(), "boxes": boxes.tolist(), "visual":png_visual.decode('utf-8')}
-            data['predictions'].append(r)
+                if output is not None:
+                    output = output.decode("utf-8")
+                    data["predictions"] = json.loads(output)
+                    db.delete(k)
+                    break
+                
+                time.sleep(CLIENT_SLEEP)
 
             # Indicate that the request was a success.
             data["success"] = True
-            #print(data)
 
     # Return the data dictionary as a JSON response.
     return flask.jsonify(data)
 
 
 if __name__ == '__main__':
-    print("Loading PyTorch model and Flask starting server ...")
-    print("Please wait until server has fully started")
-    load_model()
+
+    print("* Starting model service...")
+    t = Thread(target=classify_process, args=())
+    t.daemon = True
+    t.start()
+
+    os.system("redis-cli flushall")
+
     app.run(port=4000)
