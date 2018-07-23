@@ -14,6 +14,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+#from app import init_paths, load_model, predict_result
+
 from lib.model.config import cfg
 from lib.model.test import im_detect
 from lib.model.nms_wrapper import nms
@@ -76,17 +78,18 @@ def vis_detections(im, class_name, dets, thresh=0.5):
     plt.tight_layout()
     plt.draw()
 
-def create_plot(scores, boxes, im):
+def create_plot(scores, boxes, im_file):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
-    #im = cv2.imread(im_file)
+    im = cv2.imread(im_file)
     assert(im is not None)
 
     # Visualize detections for each class
     CONF_THRESH = 0.8
     NMS_THRESH = 0.3
     for cls_ind, cls in enumerate(CLASSES[1:]):
+        #print(cls_ind)
         cls_ind += 1 # because we skipped background
         cls_boxes = boxes[:, 4*cls_ind:4*(cls_ind + 1)]
         cls_scores = scores[:, cls_ind]
@@ -106,3 +109,11 @@ def create_plot(scores, boxes, im):
     return png_output
     #plt.show()
     #cv2.waitKey(0)
+'''if __name__ == '__main__':
+    load_model()
+    image_path = "/Users/eash/Desktop/test/complicated_wireframes/21.jpg"
+    scores, boxes = predict_result(image_path)
+    #scores = np.loadtxt('scores.txt', dtype='float32')
+    #print(scores)
+    #boxes = np.loadtxt('boxes.txt', dtype='float32')
+    create_plot(scores, boxes, image_path)'''

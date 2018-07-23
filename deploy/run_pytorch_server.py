@@ -91,8 +91,6 @@ def classify_process():
                 output = []
                 scores = ans[0]
                 boxes = ans[1]
-                print("Scores:", scores)
-                print("Boxes: ", boxes)
                 r = {"labels": scores.tolist(), "boxes": boxes.tolist()}
                 output.append(r)
 
@@ -115,6 +113,10 @@ def load_model():
     if not torch.cuda.is_available():
         model._device = 'cpu'
     model.to(model._device)
+
+@app.route("/")
+def homepage():
+    return "Hello! This is the homepage of the Sketch2UI API \n Use this link with the /predict at the end to access this API"
 
 @app.route("/predict", methods=["POST"])
 def predict():

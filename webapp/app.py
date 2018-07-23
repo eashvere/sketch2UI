@@ -7,6 +7,7 @@ import xml.etree.cElementTree as ET
 from flask import render_template, request, Flask, redirect, url_for, flash, send_from_directory
 from werkzeug.utils import secure_filename
 import requests
+import numpy as np
 from visual import create_plot
 
 UPLOAD_FOLDER = 'var/www/uploads'
@@ -31,7 +32,7 @@ def predict_result(image_path):
     # Ensure the request was successful.
     if r['success']:
         # Loop over the predictions and display them.
-        return r['predictions'][0]['labels'], r['predictions'][0]['labels']
+        return r['predictions'][0]['labels'], r['predictions'][0]['boxes']
     # Otherwise, the request failed.
     else:
         print('Request failed')
@@ -61,6 +62,10 @@ def predict():
             file.save(file_path)
             print(file_path)
             label, box = predict_result(file_path)
+            label = np.array(label)
+            box = np.array(box)
+            #print("Scores:", label)
+            #print("Boxes: ", box)
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return render_template('result.html', image_data=png_output.decode('utf-8'))
 
