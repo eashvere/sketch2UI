@@ -1,5 +1,6 @@
 # encoding: utf-8
 # Borrowed from https://github.com/L1aoXingyu/deploy-pytorch-model
+# Borrowed from https://www.pyimagesearch.com/2018/02/05/deep-learning-production-keras-redis-flask-apache/
 
 import os
 import io

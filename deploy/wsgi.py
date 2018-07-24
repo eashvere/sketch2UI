@@ -1,3 +1,5 @@
+# Borrowed from https://www.pyimagesearch.com/2018/02/05/deep-learning-production-keras-redis-flask-apache/
+
 import os
 from run_pytorch_server import app as application
 

@@ -1,3 +1,5 @@
+# Borrowed from https://www.pyimagesearch.com/2018/02/05/deep-learning-production-keras-redis-flask-apache/
+
 # initialize Redis connection settings
 REDIS_HOST = "localhost"
 REDIS_PORT = 6379
