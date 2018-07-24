@@ -53,13 +53,33 @@ def file_allowed(filename):
 def home_screen():
     return render_template('index.html')
 
+@app.route("/home_page")
+def redirect_back_home():
+    return redirect(url_for('home_screen'))
+
+@app.route("/oops")
+def oops():
+    return "OOPS! You didn't input any thing, please try again"
+
+@app.route("/instruct")
+def instructions():
+    return render_template('instruct.html')
+
+@app.route("/pubs")
+def pubs():
+    return render_template('pubs.html')
+
+@app.route("/about")
+def about():
+    return render_template('about.html')
+
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     #error = None
     if request.method == 'POST':
         if 'file' not in request.files:
             #flash('No File in the form subimitted')
-            return redirect('/')
+            return redirect('/oops')
         file = request.files['file']
         if file.filename == '':
             flash('No File submitted')

@@ -3,10 +3,17 @@
 
 <style>
 
-#center-div{
+h1{
+    position: fixed;
+    top: 0%;
+    left: 45%;
+    color: rgba(4, 29, 247, 1)
+}
+
+#file-input-div{
     position:fixed;
     bottom:100px;
-    right:900px;
+    right:800px;
 }
 
 #submit_button{
@@ -21,13 +28,14 @@
     right:500px;
 }
 
+
 #upload-photo{
     opacity: 0;
     position: absolute;
     z-index: -1;
     color: rgba(0,0,0,0);
 }
-#submit-button-label {
+#browse-button-label {
     cursor: pointer;
     background-color: #01fc0152;
     color: rgba(15, 36, 224, 0.699);
@@ -41,7 +49,7 @@
 }
 
 
-.button {
+#button {
     border:None;
     background-color: #01fc0152;
     color: rgba(15, 36, 224, 0.699);
@@ -62,6 +70,39 @@ img{
     color: rgba(2, 27, 248, 0)
 }
 
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
 
 </style>
 
@@ -75,36 +116,44 @@ img{
     <script src="../static/main.js"></script>
 </head>
 <body>
-    <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
-        <div id="center-div">
-            <label for="upload-photo" id="submit-button-label">Browse...</label>
-            <input type="file" id="upload-photo" name="photo" multiple>
+        <div class="topnav">
+                <a class="active" href="home_page">Home</a>
+                <a href="instruct">Instructions</a>
+                <a href="https://ubicomplab.cs.washington.edu/">Contact</a>
+                <a href="about">About</a>
+                <a href="pubs">Publications</a>
         </div>
-    </form>
-    <div id="img_div">
-        <label id="img-label">Image:</label>
-        <img id="blah" src="#" alt="your image" />
-
-        <script type="text/javascript">
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    
-                    reader.onload = function (e) {
-                        $('#blah').attr('src', e.target.result);
+        <h1>Sketch2UI</h1>
+        <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
+            <div id="file-input-div">
+                <label for="imgInp" id="browse-button-label">Browse</label>
+                <input type="file" id="imgInp" name="file" style="display: none">
+            </div>
+            <div id="img_div">
+                <img id="blah" src="#" alt="your image" />
+    
+                <script type="text/javascript">
+                    function readURL(input) {
+                        if (input.files && input.files[0]) {
+                              var reader = new FileReader();
+                                
+                            reader.onload = function (e) {
+                                $('#blah').attr('src', e.target.result);
+                            }
+                            reader.readAsDataURL(input.files[0]);
+                        }
                     }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-            $("#upload-photo").change(function(){
-                readURL(this);
-                document.getElementById("blah").style.display = "inline-block";
-                document.getElementById("img-label").style.display = "inline-block";
-            });
-        </script>
-    </div>
-    <div id="submit_button">
-        <button class="button" >Submit</button>
-    </div>
+                    $("#imgInp").change(function(){
+                        readURL(this);
+                        document.getElementById('blah').style.display = "inline-block"
+                    });
+                </script>
+            </div>
+            <div id="submit_button">
+                <button id="button">Submit</button>
+            </div>
+            <div class="footer">
+                <p>University of Washington: Ubicomp Lab</p>
+            </div>
 </body>
 </html>

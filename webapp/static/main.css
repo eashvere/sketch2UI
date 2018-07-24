@@ -5,12 +5,6 @@ html{
 }
 
 body{
-    background: -webkit-linear-gradient(left, #99ff99, #3399ff); /*Chrome*/
-    background: -o-linear-gradient(right, #99ff99, #3399ff); /*Opera*/
-    background: -moz-linear-gradient(right, #99ff99, #3399ff); /*FireFox*/
-    background: linear-gradient(to right, #99ff99, #3399ff);
-    background-color: #99ff99;
+    background-color: rgb(27, 163, 56);
 }
 
-
-/* IDS */
