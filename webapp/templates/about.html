@@ -52,17 +52,33 @@ h1{
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../static/main.js"></script>
+    <link rel="shortcut icon" href="#" />
 </head>
 <body>
-    <div class="topnav">
+    <div class="topnav" id="myTopnav">
         <a class="active" href="home_page">Home</a>
         <a href="instruct">Instructions</a>
         <a href="https://ubicomplab.cs.washington.edu/">Contact</a>
         <a href="about">About</a>
         <a href="pubs">Publications</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <h1 class="title">Sketch2UI</h1>
+
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            }
+        </script>
     </div>
-    <h1>Sketch2UI</h1>
     <p>Sketch2UI is a deep learning application that can take UI sketches on a paper or on a computer and convert them into XML files for use inside Andriod Studio</p>
     <p>This significantly reduces the amount of time designers and programmers need to worry about creating these files and instead use that time to further improve their apps</p>
     <p>Look at the instructions page for more details on how to submit an image, what ui elements are currently avaliable, and download the XML file</p>

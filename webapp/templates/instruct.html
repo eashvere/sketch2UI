@@ -2,116 +2,91 @@
 <html>
 <head>
 
-<style>
-
-h1{
-    position: absolute;
-    top: 0%;
-    left: 45%;
-    color: rgba(4, 29, 247, 1)
-}
-
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-  }
-  
-.topnav a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
-  }
-
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
-    text-align: center;
-}
-
-</style>
-
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../static/main.js"></script>
+    <link rel="shortcut icon" href="#" />
 </head>
 <body>
-    <div class="topnav">
+    <div class="topnav" id="myTopnav">
         <a class="active" href="home_page">Home</a>
         <a href="instruct">Instructions</a>
         <a href="https://ubicomplab.cs.washington.edu/">Contact</a>
         <a href="about">About</a>
         <a href="pubs">Publications</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <h1 class="title">Sketch2UI</h1>
     </div>
-    <h1>Sketch2UI</h1>
     <h3>How to Use this Website</h3>
-    <p>Go back to the Home Page and Press the Browse Button</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This will open a viewing where you cna select files to upload</p> 
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>Once selected, press submit and wait approximently 30 seconds</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>his will redirect to another page that will show you the model output</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>A Download button will also be avaliable where you can receive your XML file</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
+    <div class="row">
+            <div class="flex-container" id="flex_left">
+                    <h4>Step 1</h4>
+                    <p>Start at the Home Page and Press the Browse Button</p>
+                    <img src='../static/images/Button_circle.jpg' width="200" height="200">
+                    <h4>Step 3</h4>
+                    <p>Once selected, press submit and wait approximently 30 seconds</p>
+                    <img src='../static/images/ButtonCircle_sketch.jpg' width="200" height="200">
+                    <h4>Step 5</h4>
+                    <p>A Download button will also be avaliable where you can receive your XML file</p>
+                    <img src='../static/images/ButtonCircle_sketch.jpg' width="200" height="200">
+                </div>
+                <div class="flex-container" id="flex_right">
+                    <h4>Step 2</h4>
+                    <p>This will open a viewing where you cna select files to upload</p> 
+                    <img src='../static/images/Button_square.jpg' width="200" height="200">
+                    <h4>Step 4</h4>
+                    <p>his will redirect to another page that will show you the model output</p>
+                    <img src='../static/images/ButtonCircle_sketch.jpg' width="200" height="200">
+                </div>        
+    </div>
     <h3>Different types of Classes</h3>
-    <h4>ButtonCircle</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what a button shaped like a circle would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <h4>ButtonSquare</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what a button shaped like a square would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <h4>Text</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what text would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <h4>TextInput</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what text input would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <h4>RadioButton</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what a radio button would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <h4>CheckBox</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what a checkbox would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <h4>ImageView</h4>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-    <p>This Class (as shown above) shows what the space in an app to hold an image would look like in a Sketch Drawing</p>
-    <p>The Output is shown below</p>
-    <img src='../static/images/ButtonCircle_sketch.jpg'>
-
-
+    <div class="row">
+            <div class="flex-container" id="flex_left">
+                    <h4>ButtonCircle</h4>
+                    <img src='../static/images/Button_circle.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what a button shaped like a circle would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/circle_button_android.png' width="200" height="200">
+                    <h4>Text</h4>
+                    <img src='../static/images/Text.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what text would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/textview_android.png' width="200" height="200">
+                    <h4>RadioButton</h4>
+                    <img src='../static/images/RadioButton.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what a radio button would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/radiobutton_android.jpeg' width="200" height="200">
+                    <h4>ImageView</h4>
+                    <img src='../static/images/ImageView.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what the space in an app to hold an image would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/imageview.png' width="200" height="200">
+                </div>
+                <div class="flex-container" id="flex_right">
+                    <h4>ButtonSquare</h4>
+                    <img src='../static/images/Button_square.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what a button shaped like a square would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/button_android.png' width="200" height="200">
+                    <h4>TextInput</h4>
+                    <img src='../static/images/TextInput.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what text input would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/text_input.png' width="200" height="200">
+                    <h4>CheckBox</h4>
+                    <img src='../static/images/Checkbox.jpg' width="200" height="200">
+                    <p>This Class (as shown above) shows what a checkbox would look like in a Sketch Drawing</p>
+                    <p>The Output is shown below</p>
+                    <img src='../static/images/checkbox_android.png' width="200" height="200">        
+                </div>    
+    </div>
     <div class="footer">
         <p>University of Washington: Ubicomp Lab</p>
     </div>
