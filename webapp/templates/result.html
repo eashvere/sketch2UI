@@ -18,10 +18,25 @@
         <a href="https://ubicomplab.cs.washington.edu/">Contact</a>
         <a href="about">About</a>
         <a href="pubs">Publications</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <h1 class="title">Sketch2UI</h1>
     </div>
-    <h1 class="title">Sketch2UI</h1>
     <div id="center-div">
         <img src="data:image/png;base64, {{image_data}}" alt="Image" width=500 height=500>
+    </div>
+
+    <div id="download-xml-div">
+        <form method="GET" action="../var/www/downloads/download.xml"></form>
+            <button class="btn"><i class="fa fa-download"></i> Download XML!</button>
+        </form>
+    </div>
+
+    <div id="download-json-div">
+        <form method="GET" action="../var/www/downloads/download.json"></form>
+            <button class="btn"><i class="fa fa-download"></i> Download JSON!</button>
+        </form>
     </div>
 
     <div class="footer">

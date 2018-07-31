@@ -14,7 +14,7 @@ body{
     margin: 0px;
     top: 1%;
     left: 45%;
-    color: rgba(4, 29, 247, 1)
+    color: #4CAF50
 }
 
 .topnav {
@@ -79,8 +79,8 @@ body{
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: red;
-    color: white;
+    background-color: #4CAF50;
+    color: rgb(0, 0, 0);
     text-align: center;
 }
 
@@ -103,6 +103,31 @@ body{
     object-fit: cover;
 }
 
+.button {
+    border:None;
+    background-color: #36363688;
+    color: rgb(0, 0, 0);
+    padding: 30px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn {
+    background-color: #4CAF50;
+    border: none;
+    color: black;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+.btn:hover {
+    background-color: rgb(56, 126, 58);
+}
+
 #file-input-div{
     position:fixed;
     bottom:15%;
@@ -121,16 +146,23 @@ body{
     right:5%;
 }
 
-@media screen and (min-width:500px){
+@media (max-width:800px){
     #file-input-div{
         -webkit-flex: none;
         flex: none;
+        bottom: 50%;
+        right:30%;
     }
     
     #submit_button{
         -webkit-flex: 1;
         flex: 1;
+        bottom: 30%;
+        right: 30%
     
+    }
+    #blah{
+        display:none !important;
     }
 }
 
@@ -141,31 +173,6 @@ body{
     z-index: -1;
     color: rgba(0,0,0,0);
 }
-#browse-button-label {
-    cursor: pointer;
-    background-color: #01fc0152;
-    color: rgba(15, 36, 224, 0.699);
-    border: none;
-    padding: 30px 64px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-
-#button {
-    border:None;
-    background-color: #01fc0152;
-    color: rgba(15, 36, 224, 0.699);
-    padding: 30px 64px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-}
 
 #img-label{
     display:None;
@@ -174,8 +181,8 @@ body{
 
 #center-div{
     position:fixed;
-    top: 40%;
-    left: 45%;
+    top: 10%;
+    left: 33%;
 }
 
 #input{
@@ -193,7 +200,28 @@ body{
     display:None;
     position:fixed;
     top: 10%;
-    left: 30%;
+    left: 35%;
+    z-index: 3;
 }
 
+#phone{
+    display:None;
+    position:fixed;
+    top: 10%;
+    left: 35%;
+    z-index: 1;
+
+}
+
+#download-json-div{
+    position:fixed;
+    top: 70%;
+    left: 43%;
+}
+
+#download-xml-div{
+    position:fixed;
+    top: 85%;
+    left: 43%;
+}
 

@@ -46,8 +46,23 @@ CLASSES = ('__background__',  # always index 0
 NETS = {'vgg16': ('vgg16_faster_rcnn_iter_%d.pth',),'res101': ('res101_faster_rcnn_iter_%d.pth',)}
 DATASETS= {'pascal_voc': ('voc_2007_trainval',),'pascal_voc_0712': ('voc_2007_trainval+voc_2012_trainval',)}
 fig, ax = plt.subplots()
+class_index = 0
+
+json_file = None
+
+def initialize_json_file():
+    json_file = None
+    json_file = {}
+    json_file['results'] = []
+
+
+def create_json_file(bbox, score, class_index):
+    
+
 def vis_detections(im, class_name, dets, thresh=0.5):
     """Draw detected bounding boxes."""
+    class_index += 1
+    json_file[results]
     inds = np.where(dets[:, -1] >= thresh)[0]
     if len(inds) == 0:
         return
@@ -84,6 +99,7 @@ def create_plot(scores, boxes, im_file):
     # Load the demo image
     im = cv2.imread(im_file)
     assert(im is not None)
+    initialize_json_file()
 
     # Visualize detections for each class
     CONF_THRESH = 0.8
@@ -100,6 +116,7 @@ def create_plot(scores, boxes, im_file):
         vis_detections(im, cls, dets, thresh=CONF_THRESH)
 
     j = plt.gcf()
+    plt.clf()
     #j.savefig('./static/plot.png')
     png_output = BytesIO()
     j.savefig(png_output, format='png')
