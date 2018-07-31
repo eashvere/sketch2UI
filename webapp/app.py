@@ -93,8 +93,6 @@ def predict():
             label, box = predict_result(file_path)
             label = np.array(label)
             box = np.array(box)
-            #print("Scores:", label)
-            #print("Boxes: ", box)
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return render_template('result.html', image_data=png_output.decode('utf-8'))
 
