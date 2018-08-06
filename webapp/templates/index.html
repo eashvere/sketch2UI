@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
 
+<style>
+    h4{
+        position:absolute;
+        top: 30%;
+        left: 38%;
+    }
+</style>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/dropzone.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="../static/main.js"></script>
+    <script src="../static/js/main.js"></script>
+    <script src="../static/js/dropzone.js"></script>
     <link rel="shortcut icon" href="#" />
 </head>
 <body>
@@ -22,39 +32,28 @@
                 <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                     <i class="fa fa-bars"></i>
                 </a>
-                <h1 class="title">Sketch2UI</h1>
+                <div onclick="location.href='/';" style="cursor: pointer;"><h1 class="title">Sketch2UI</h1></div>
         </div>
 
-        <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
-            <div id="file-input-div">
-                <label for="imgInp" class="button">Browse</label>
-                <input type="file" id="imgInp" name="file" style="display: none">
+        <form action="/predict" class="dropzone dz-clickable" id="my-dropzone" method="POST" enctype="multipart/form-data">
+            <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
+            <div class="dz-message">
+                Drop files here or click to upload.
             </div>
-            <div id="img_div">
-                    <img id="blah" src="#" alt="your image" />
+        </form>
 
-                    <script type="text/javascript">
-                        function readURL(input) {
-                            if (input.files && input.files[0]) {
-                                  var reader = new FileReader();
-                                    
-                                reader.onload = function (e) {
-                                    $('#blah').attr('src', e.target.result);
-                                }
-                                reader.readAsDataURL(input.files[0]);
-                            }
-                        }
-                        $("#imgInp").change(function(){
-                            readURL(this);
-                            document.getElementById('blah').style.display = "inline-block"
-                        });
-                    </script>
-            </div>
-            <div id="submit_button">
-                <button class="button">Submit</button>
-            </div>
-            <div class="footer">
-                <p>University of Washington: Ubicomp Lab</p>
-            </div>
+        <script>
+            Dropzone.autoDiscover = false;
+            $(function() {
+                var myDropzone = new Dropzone("#my-dropzone");
+                myDropzone.on("queuecomplete", function(file) {
+                    // Called when all files in the queue finish uploading.
+                    window.location = "{{ url_for('predict') }}";
+                });
+            })
+        </script>
+        <div class="footer">
+            <h4>University of Washington: Ubicomp Lab</h4>
+        </div>
 </body>
 </html>

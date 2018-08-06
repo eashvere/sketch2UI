@@ -12,9 +12,12 @@ from visual import create_plot
 
 UPLOAD_FOLDER = 'var/www/uploads'
 EXTENSIONS = set(['jpg', 'png', 'jpeg'])
+png_output = None
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['ENV'] = 'development'
 
 PyTorch_REST_API_URL = 'http://127.0.0.1:4000/predict'
 
@@ -76,6 +79,7 @@ def about():
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     #error = None
+    global png_output
     if request.method == 'POST':
         if 'file' not in request.files:
             #flash('No File in the form subimitted')
@@ -94,10 +98,14 @@ def predict():
             label = np.array(label)
             box = np.array(box)
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('result.html', image_data=png_output.decode('utf-8'))
 
+    return render_template('result.html', image_data=png_output.decode('utf-8'))
 
-    return redirect('/')
+app.route("/download")
+def download(files):
+    pass
+    #TODO Create this download endpoint!
+
 
 
 

@@ -1,61 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-
-<style>
-
-h1{
-    position: fixed;
-    top: 0%;
-    left: 45%;
-    color: rgba(4, 29, 247, 1)
-}
-
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-  }
-  
-.topnav a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
-  }
-
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
-    text-align: center;
-}
-
-</style>
-
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/dropzone.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="../static/main.js"></script>
+    <script src="../static/js/main.js"></script>
     <link rel="shortcut icon" href="#" />
 </head>
+
 <body>
     <div class="topnav" id="myTopnav">
         <a class="active" href="home_page">Home</a>
@@ -66,14 +23,17 @@ h1{
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
-        <h1 class="title">Sketch2UI</h1>
+        <div onclick="location.href='/';" style="cursor: pointer;">
+            <h1 class="title">Sketch2UI</h1>
+        </div>
     </div>
-    <p>Sketch2UI is a deep learning application that can take UI sketches on a paper or on a computer and convert them into XML files for use inside Andriod Studio</p>
-    <p>This significantly reduces the amount of time designers and programmers need to worry about creating these files and instead use that time to further improve their apps</p>
-    <p>Look at the instructions page for more details on how to submit an image, what ui elements are currently avaliable, and download the XML file</p>
+    <p>Sketch2UI is a deep learning application that can take UI sketches on a paper or on a computer and convert them into
+        XML files for use inside Andriod Studio</p>
+    <p>This significantly reduces the amount of time designers and programmers need to worry about creating these files and
+        instead use that time to further improve their apps</p>
+    <p>Look at the instructions page for more details on how to submit an image, what ui elements are currently avaliable, and
+        download the XML file</p>
 
-    <div class="footer">
-        <p>University of Washington: Ubicomp Lab</p>
-    </div>
 </body>
+
 </html>
