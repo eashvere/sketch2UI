@@ -8,6 +8,7 @@
     <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../static/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/dropzone.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../static/js/main.js"></script>
     <link rel="shortcut icon" href="#" />
@@ -32,21 +33,15 @@
     </div>
 
     <div id="download-xml-div">
-        <form method="GET" action="../var/www/downloads/download.xml"></form>
-        <button class="btn">
-            <i class="fa fa-download"></i> Download XML!</button>
-        </form>
+        <a href="{{download_xml}}" target="blank"><button class="btn"><i class="fa fa-download"></i> Download XML!</button></a>
     </div>
 
     <div id="download-json-div">
-        <form method="GET" action="../var/www/downloads/download.json"></form>
-        <button class="btn">
-            <i class="fa fa-download"></i> Download JSON!</button>
-        </form>
+        <a href="{{download_json}}" target="blank"><button class="btn"><i class="fa fa-download"></i> Download JSON!</button></a>
     </div>
 
     <div class="footer">
-            <h4>University of Washington: Ubicomp Lab</h4>
+            <h4 id="creator">University of Washington: Ubicomp Lab</h4>
     </div>
 </body>
 

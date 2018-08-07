@@ -150,16 +150,6 @@ body {
     background-color: rgb(56, 126, 58);
 }
 
-.dropzone {
-    top: 500px;
-    background: white;
-    border-radius: 25px;
-    border: 2px solid rgb(56, 126, 58);
-    border-image: none;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 #file-input-div {
     position: fixed;
@@ -252,4 +242,13 @@ body {
     position: fixed;
     top: 85%;
     left: 43%;
+}
+
+#creator {
+    left: 38%;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }

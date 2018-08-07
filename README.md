@@ -4,4 +4,8 @@ This is a project that takes hand-drawn wireframes and converts them into xml fi
 
 #Requirements
 
-Numpy, Flask, Redis, Opencv, Pytorch, TorchVision, werkzeug, requests, Pillow, Matplotlib
+Run pip install -r requirements.txt to install all the packages
+
+#Usage
+
+Run the files in each of the folders. Remember to follow instructions

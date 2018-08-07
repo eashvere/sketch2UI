@@ -4,11 +4,13 @@ from PIL import Image
 import os
 import io
 import xml.etree.cElementTree as ET
-from flask import render_template, request, Flask, redirect, url_for, flash, send_from_directory
+from flask import render_template, request, Flask, redirect, url_for, flash, send_file, send_from_directory
 from werkzeug.utils import secure_filename
 import requests
 import numpy as np
 from visual import create_plot
+import zipfile
+import shutil
 
 UPLOAD_FOLDER = 'var/www/uploads'
 EXTENSIONS = set(['jpg', 'png', 'jpeg'])
@@ -29,6 +31,16 @@ for extra_dir in extra_dirs:
             filename = os.path.join(dirname, filename)
             if os.path.isfile(filename):
                 extra_files.append(filename)
+
+def delete_files():
+    shutil.rmtree("var/www/downloads/json")
+    os.mkdir("var/www/downloads/json")
+    shutil.rmtree("var/www/downloads/xml")
+    os.mkdir("var/www/downloads/xml")
+    shutil.rmtree("var/www/downloads/zip")
+    os.mkdir("var/www/downloads/zip")
+    shutil.rmtree("var/www/uploads")
+    os.mkdir("var/www/uploads")
 
 def predict_result(image_path):
     # Initialize image path
@@ -76,6 +88,31 @@ def pubs():
 def about():
     return render_template('about.html')
 
+app.route("/download_json")
+def jsons():
+    zipf = zipfile.ZipFile('json.zip', mode='w', compression=zipfile.ZIP_DEFLATED)
+    for root, dirs, files in os.walk('/var/www/downloads/json/'):
+        for file in files:
+            print(file)
+            zipf.write('/var/www/downloads/json/'+file)
+    zipf.close()
+    try:
+        return send_from_directory('/', 'json.zip', as_attachment=True)
+    except Exception as e:
+        return str(e)
+
+app.route("/download_xml")
+def xmls():
+    zipf = zipfile.ZipFile('/var/www/downloads/zip/xml.zip', mode='w', compression=zipfile.ZIP_DEFLATED)
+    for root,dirs, files in os.walk('/var/www/downloads/xml/'):
+        for file in files:
+            zipf.write('/var/www/downloads/xml/'+file)
+    zipf.close()
+    try:
+        return send_from_directory('/var/www/downloads/zip', 'xml.zip', as_attachment=True)
+    except Exception as e:
+        return str(e)
+
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     #error = None
@@ -90,6 +127,7 @@ def predict():
             return redirect('/')
         file.filename = 'image.jpg'
         if file and file_allowed(file.filename):
+            delete_files()
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
@@ -98,13 +136,9 @@ def predict():
             label = np.array(label)
             box = np.array(box)
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-    return render_template('result.html', image_data=png_output.decode('utf-8'))
-
-app.route("/download")
-def download(files):
-    pass
-    #TODO Create this download endpoint!
+            return render_template('result.html', image_data=png_output.decode('utf-8'))
+            
+    return render_template('result.html')
 
 
 

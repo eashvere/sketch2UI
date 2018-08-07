@@ -44,8 +44,15 @@
 
         <script>
             Dropzone.autoDiscover = false;
+
+            var myDropzone = new Dropzone('#my-dropzone', {
+                maxFilesize: 3.0, 
+                maxFiles: 5, 
+                parallelUploads: true,
+            });
+        
+
             $(function() {
-                var myDropzone = new Dropzone("#my-dropzone");
                 myDropzone.on("queuecomplete", function(file) {
                     // Called when all files in the queue finish uploading.
                     window.location = "{{ url_for('predict') }}";
@@ -53,7 +60,7 @@
             })
         </script>
         <div class="footer">
-            <h4>University of Washington: Ubicomp Lab</h4>
+            <h4 id="creator">University of Washington: Ubicomp Lab</h4>
         </div>
 </body>
 </html>

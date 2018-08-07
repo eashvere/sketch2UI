@@ -529,11 +529,14 @@ footer .logo { margin: 2.8rem 0; width: 270px; }
 }
 .dropzone, .dropzone * {
     box-sizing: border-box;
-    top: 30%;
 }
 .dropzone {
-    min-height: 150px;
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 12%;
+    left: 10%;
+    height: 600px;
+    width:1150px;
+    border: 2px solid #4CAF50;
     border-radius: 25px;
     background: white;
     padding: 54px 54px;

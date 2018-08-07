@@ -28,6 +28,8 @@ import settings
 
 # initialize our Flask application, Redis server, and Keras model
 app = flask.Flask(__name__)
+
+app.config['ENV'] = 'development'
 db = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 def prepare_image(image, target):
