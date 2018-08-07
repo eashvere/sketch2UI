@@ -22,12 +22,12 @@ from lib.model.nms_wrapper import nms
 
 from lib.utils.timer import Timer
 import matplotlib
+matplotlib.use('Agg')
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
 
 from io import BytesIO
-#import PyQt5
 
-#matplotlib.use('qt5agg')
 import numpy as np
 import os, cv2
 import argparse
@@ -36,7 +36,7 @@ from lib.nets.vgg16 import vgg16
 from lib.nets.resnet_v1 import resnetv1
 
 import torch
-import matplotlib.pyplot as plt
+
 
 PLOT_FOLDER = './var/www/plots/'
 
