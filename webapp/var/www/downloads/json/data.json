@@ -1,0 +1,35 @@
+{
+    "results": [
+        {
+            "ButtonCircle": []
+        },
+        {
+            "ButtonSquare": []
+        },
+        {
+            "CheckBox": []
+        },
+        {
+            "ImageView": []
+        },
+        {
+            "RadioButton": []
+        },
+        {
+            "TextInput": []
+        },
+        {
+            "Text": [
+                {
+                    "score": "0.99221784",
+                    "bl_point": [
+                        "327.34665",
+                        "234.89357"
+                    ],
+                    "width": "103.547424",
+                    "height": "44.336014"
+                }
+            ]
+        }
+    ]
+}

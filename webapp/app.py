@@ -150,9 +150,9 @@ def predict():
             label = np.array(label)
             box = np.array(box)
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('result.html', image_data=png_output.decode('utf-8'))
+            #return render_template('result.html', image_data=png_output.decode('utf-8'))
             
-    return render_template('index.html')
+    return render_template('result.html', image_data=png_output.decode('utf-8'))
 
 
 
