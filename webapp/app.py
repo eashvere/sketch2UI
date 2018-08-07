@@ -50,8 +50,10 @@ def predict_result(image_path):
     #print(payload)
 
     # Submit the request.
-    #print(requests.post(PyTorch_REST_API_URL, files=payload)
-    r = requests.post(PyTorch_REST_API_URL, files=payload).json()
+    try:
+        r = requests.post(PyTorch_REST_API_URL, files=payload).json()
+    except Exception as e:
+        print(e)
 
     # Ensure the request was successful.
     if r['success']:
@@ -75,6 +77,18 @@ def redirect_back_home():
 @app.route("/oops")
 def oops():
     return "OOPS! You didn't input any thing, please try again"
+
+@app.errorhandler(403)
+def page_forbidden(e):
+    return render_template('errors/403.html'), 403
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html'), 500
 
 @app.route("/instruct")
 def instructions():
@@ -138,7 +152,7 @@ def predict():
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return render_template('result.html', image_data=png_output.decode('utf-8'))
             
-    return render_template('result.html')
+    return render_template('index.html')
 
 
 
@@ -146,5 +160,8 @@ def predict():
 if __name__ == '__main__':
     app.secret_key = 'lolUWiscool'
     app.config['SESSION_TYPE'] = 'filesystem'
+    app.register_error_handler(403, page_forbidden)
+    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(500, internal_server_error)
 
     app.run(debug=True, port=5000)

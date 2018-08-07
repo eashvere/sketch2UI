@@ -40,6 +40,37 @@
             <div class="dz-message">
                 Drop files here or click to upload.
             </div>
+            <div class="fallback">
+                <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
+                    <div id="file-input-div">
+                        <label for="imgInp" class="button">Browse</label>
+                        <input type="file" id="imgInp" name="file" style="display: none">
+                    </div>
+                    <div id="img_div">
+                            <img id="blah" src="#" alt="your image" />
+        
+                            <script type="text/javascript">
+                                function readURL(input) {
+                                    if (input.files && input.files[0]) {
+                                          var reader = new FileReader();
+                                            
+                                        reader.onload = function (e) {
+                                            $('#blah').attr('src', e.target.result);
+                                        }
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+                                $("#imgInp").change(function(){
+                                    readURL(this);
+                                    document.getElementById('blah').style.display = "inline-block"
+                                });
+                            </script>
+                    </div>
+                    <div id="submit_button">
+                        <button class="button">Submit</button>
+                    </div>
+                </form>
+            </div>
         </form>
 
         <script>
