@@ -5,11 +5,9 @@
 deploy/models/vgg16_faster_rcnn_iter_60000.pkl
 deploy/models/vgg16_faster_rcnn_iter_60000.pth
 
-*.pyc
-*.jpg
-*.jpeg
-*.png
-*.zip
-*.json
-*.xml
-*.png
+__pycache__/
+*.py[cod]
+*$py.class
+
+instance/
+.webassets-cache
