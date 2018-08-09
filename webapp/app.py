@@ -4,13 +4,14 @@ from PIL import Image
 import os
 import io
 import xml.etree.cElementTree as ET
-from flask import render_template, request, Flask, redirect, url_for, flash, send_file, send_from_directory
+from flask import render_template, request, Flask, redirect, url_for, flash, send_file
 from werkzeug.utils import secure_filename
 import requests
 import numpy as np
 from visual import create_plot
 import zipfile
 import shutil
+import glob 
 
 UPLOAD_FOLDER = 'var/www/uploads'
 EXTENSIONS = set(['jpg', 'png', 'jpeg'])
@@ -102,30 +103,23 @@ def pubs():
 def about():
     return render_template('about.html')
 
-app.route("/download_json")
-def jsons():
-    zipf = zipfile.ZipFile('json.zip', mode='w', compression=zipfile.ZIP_DEFLATED)
-    for root, dirs, files in os.walk('/var/www/downloads/json/'):
-        for file in files:
-            print(file)
-            zipf.write('/var/www/downloads/json/'+file)
-    zipf.close()
-    try:
-        return send_from_directory('/', 'json.zip', as_attachment=True)
-    except Exception as e:
-        return str(e)
+@app.route("/json")
+def downloadjson():
+    data = io.BytesIO()
+    with zipfile.ZipFile(data, mode='w', compression=zipfile.ZIP_DEFLATED) as z:
+        for f_name in glob.glob('./var/www/downloads/json/*'):
+            z.write(f_name)
+    data.seek(0)
+    return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='json.zip')
 
-app.route("/download_xml")
+@app.route("/downloadxml")
 def xmls():
-    zipf = zipfile.ZipFile('/var/www/downloads/zip/xml.zip', mode='w', compression=zipfile.ZIP_DEFLATED)
-    for root,dirs, files in os.walk('/var/www/downloads/xml/'):
-        for file in files:
-            zipf.write('/var/www/downloads/xml/'+file)
-    zipf.close()
-    try:
-        return send_from_directory('/var/www/downloads/zip', 'xml.zip', as_attachment=True)
-    except Exception as e:
-        return str(e)
+    data = io.BytesIO()
+    with zipfile.ZipFile(data, mode='w', compression=zipfile.ZIP_DEFLATED) as z:
+        for f_name in glob.glob('./var/www/downloads/xml/*'):
+            z.write(f_name)
+    data.seek(0)
+    return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='xml.zip')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
@@ -145,7 +139,7 @@ def predict():
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            print(file_path)
+            #print(file_path)
             label, box = predict_result(file_path)
             label = np.array(label)
             box = np.array(box)
