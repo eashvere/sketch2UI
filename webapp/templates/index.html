@@ -36,7 +36,7 @@
         </div>
 
         <form action="/predict" class="dropzone dz-clickable" id="my-dropzone" method="POST" enctype="multipart/form-data">
-            <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
+            <input type="file" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;" multiple>
             <div class="dz-message">
                 Drop files here or click to upload.
             </div>
@@ -79,7 +79,8 @@
             var myDropzone = new Dropzone('#my-dropzone', {
                 maxFilesize: 3.0, 
                 maxFiles: 5, 
-                parallelUploads: true,
+                parallelUploads: 100000,
+                uploadMultiple: true
             });
         
 

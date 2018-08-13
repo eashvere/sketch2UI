@@ -84,7 +84,7 @@ def create_plot(scores, boxes, im_file):
 
     #j.savefig('./static/plot.png')
     png_output = BytesIO()
-    j.savefig(png_output, format='png')
+    j.savefig(png_output, format='jpg')
     png_output.seek(0)
     import base64
     png_output = base64.b64encode(png_output.getvalue())

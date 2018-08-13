@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../static/css/main.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../static/css/dropzone.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/slideshow.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="../static/js/main.js"></script>
     <link rel="shortcut icon" href="#" />
 </head>
@@ -28,8 +30,16 @@
             <h1 class="title">Sketch2UI</h1>
         </div>
     </div>
-    <div id="center-div">
-        <img src="data:image/png;base64, {{image_data}}" alt="Image" width=500 height=500>
+
+    <div class='slideshow-container'>
+        {% for n in range(list_len) %}
+            <div class="mySlides fade">
+                <div class="numbertext">{{ loop.index }} / {{ list_len|safe}}  {{ filenames[n] }}</div>
+                <img src="data:image/jpeg;charset=utf-8;base64, {{ img_data[n - 1] }}" alt="Image" style="width:100%">
+            </div>
+        {% endfor %}
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
 
     <div id="download-json-div">
@@ -43,6 +53,33 @@
     <div class="footer">
             <h4 id="creator">University of Washington: Ubicomp Lab</h4>
     </div>
+
+    <script type="text/javascript">
+            var slideIndex = 1;
+            showSlides(slideIndex);
+            
+            // Next/previous controls
+            function plusSlides(n) {
+              showSlides(slideIndex += n);
+            }
+            
+            // Thumbnail image controls
+            function currentSlide(n) {
+              showSlides(slideIndex = n);
+            }
+            
+            function showSlides(n) {
+              var i;
+              var slides = document.getElementsByClassName("mySlides fade");
+              if (n > slides.length) {slideIndex = 1} 
+              if (n < 1) {slideIndex = slides.length}
+              for (i = 0; i < slides.length; i++) {
+                  slides[i].style.display = "none"; 
+              }
+              slides[slideIndex-1].style.display = "block"; 
+            }
+    </script>
+
 </body>
 
 </html>

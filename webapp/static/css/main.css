@@ -234,14 +234,14 @@ body {
 
 #download-json-div {
     position: fixed;
-    top: 75%;
-    left: 42.6%;
+    top: 82.5%;
+    left: 32.5%;
 }
 
 #download-xml-div {
     position: fixed;
-    top: 85%;
-    left: 43%;
+    top: 82.5%;
+    left: 52.5%;
 }
 
 #creator {

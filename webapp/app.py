@@ -11,11 +11,14 @@ import numpy as np
 from visual import create_plot
 import zipfile
 import shutil
-import glob 
+import glob
+import urllib.parse
+from bs4 import BeautifulSoup as Soup
 
 UPLOAD_FOLDER = 'var/www/uploads'
 EXTENSIONS = set(['jpg', 'png', 'jpeg'])
-png_output = None
+png_output_list = None
+filenames_list = None
 
 
 app = Flask(__name__)
@@ -43,6 +46,14 @@ def delete_files():
     shutil.rmtree("var/www/uploads")
     os.mkdir("var/www/uploads")
 
+def create_filename():
+    """Makes a filename that isn't a duplicate in a given directory"""
+    name = 0
+    while os.path.isfile('test/' + str(name) + '.jpg') is True:
+        name += 1
+    filename = str(name) + '.jpg'
+    return filename
+
 def predict_result(image_path):
     # Initialize image path
     image = open(image_path, 'rb').read()
@@ -69,6 +80,7 @@ def file_allowed(filename):
 
 @app.route("/")
 def home_screen():
+    delete_files()
     return render_template('index.html')
 
 @app.route("/home_page")
@@ -123,30 +135,30 @@ def xmls():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    #error = None
-    global png_output
+    global png_output_list
+    global filenames_list
     if request.method == 'POST':
-        if 'file' not in request.files:
-            #flash('No File in the form subimitted')
-            return redirect('/oops')
-        file = request.files['file']
-        if file.filename == '':
-            flash('No File submitted')
-            return redirect('/')
-        file.filename = 'image.jpg'
-        if file and file_allowed(file.filename):
-            delete_files()
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            #print(file_path)
-            label, box = predict_result(file_path)
+        png_output_list = list()
+        filenames_list = list()
+        file_obj = request.files
+        assert(file_obj is not None)
+        for k, f in file_obj.items():
+            if f and file_allowed(f.filename):
+                filename = secure_filename(f.filename)
+                filenames_list.append(filename)
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                f.save(file_path)
+
+
+        for img_input in glob.glob(os.path.join(app.config['UPLOAD_FOLDER'], '*')):
+            label, box = predict_result(img_input)
             label = np.array(label)
             box = np.array(box)
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            #return render_template('result.html', image_data=png_output.decode('utf-8'))
-            
-    return render_template('result.html', image_data=png_output.decode('utf-8'))
+            assert(png_output is not None)
+            png_output_list.append(png_output.decode('utf-8'))
+    
+    return render_template('result.html', img_data=png_output_list, filenames=filenames_list, list_len=len(png_output_list))
 
 
 
