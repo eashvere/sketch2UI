@@ -2,8 +2,8 @@
 <html>
 
 <style>
-    h4{
-        position:absolute;
+    h4 {
+        position: absolute;
         top: 30%;
         left: 38%;
     }
@@ -14,85 +14,121 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sketch2UI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="../static/css/main.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../static/css/dropzone.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="../static/js/main.js"></script>
     <script src="../static/js/dropzone.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="#" />
 </head>
+
 <body>
-        <div class="topnav" id="myTopnav">
-                <a class="active" href="home_page">Home</a>
-                <a href="instruct">Instructions</a>
-                <a href="https://ubicomplab.cs.washington.edu/">Contact</a>
-                <a href="about">About</a>
-                <a href="pubs">Publications</a>
-                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div onclick="location.href='/';" style="cursor: pointer;"><h1 class="title">Sketch2UI</h1></div>
+    <div class="topnav" id="myTopnav">
+        <a class="active" href="home_page">Home</a>
+        <a href="instruct">Instructions</a>
+        <a href="https://ubicomplab.cs.washington.edu/">Contact</a>
+        <a href="about">About</a>
+        <a href="pubs">Publications</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div onclick="location.href='/';" style="cursor: pointer;">
+            <h1 class="title">Sketch2UI</h1>
         </div>
+    </div>
 
-        <form action="/predict" class="dropzone dz-clickable" id="my-dropzone" method="POST" enctype="multipart/form-data">
-            <input type="file" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;" multiple>
-            <div class="dz-message">
-                Drop files here or click to upload.
-            </div>
-            <div class="fallback">
-                <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
-                    <div id="file-input-div">
-                        <label for="imgInp" class="button">Browse</label>
-                        <input type="file" id="imgInp" name="file" style="display: none">
-                    </div>
-                    <div id="img_div">
-                            <img id="blah" src="#" alt="your image" />
-        
-                            <script type="text/javascript">
-                                function readURL(input) {
-                                    if (input.files && input.files[0]) {
-                                          var reader = new FileReader();
-                                            
-                                        reader.onload = function (e) {
-                                            $('#blah').attr('src', e.target.result);
-                                        }
-                                        reader.readAsDataURL(input.files[0]);
-                                    }
+    <form action="/predict" class="dropzone dz-clickable container" id="my-dropzone" method="POST" enctype="multipart/form-data">
+        <input type="file" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;"
+            multiple>
+        <div class="dz-message">
+            Drop files here or click to upload.
+        </div>
+        <button type="submit" id="dropzone_submit" class="btn btn-success btn-lg float-left" style="display: None; position: absolute;">Submit</button>
+        <div class="fallback">
+            <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
+                <div id="file-input-div">
+                    <label for="imgInp" class="button">Browse</label>
+                    <input type="file" id="imgInp" name="file" style="display: none">
+                </div>
+                <div id="img_div">
+                    <img id="blah" src="#" alt="your image" />
+
+                    <script type="text/javascript">
+                        function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('#blah').attr('src', e.target.result);
                                 }
-                                $("#imgInp").change(function(){
-                                    readURL(this);
-                                    document.getElementById('blah').style.display = "inline-block"
-                                });
-                            </script>
-                    </div>
-                    <div id="submit_button">
-                        <button class="button">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </form>
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                        $("#imgInp").change(function () {
+                            readURL(this);
+                            document.getElementById('blah').style.display = "inline-block"
+                        });
+                    </script>
+                </div>
+                <div id="submit_button">
+                    <button class="button">Submit</button>
+                </div>
+            </form>
+        </div>
+    </form>
 
-        <script>
-            Dropzone.autoDiscover = false;
+    <script>
+        Dropzone.autoDiscover = false;
 
-            var myDropzone = new Dropzone('#my-dropzone', {
-                maxFilesize: 3.0, 
-                maxFiles: 5, 
-                parallelUploads: 100000,
-                uploadMultiple: true
-            });
-        
+        var myDropzone = new Dropzone('#my-dropzone', {
+            maxFilesize: 3.0,
+            maxFiles: 5,
+            parallelUploads: 100000,
+            uploadMultiple: true,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            acceptedFiles: ".png,.jpg,.jpeg",
+            maxfilesexceeded: function (file) {
+                this.removeAllFiles();
+                this.addFile(file);
+            },
+            init: function () {
+                var drop = this;
 
-            $(function() {
-                myDropzone.on("queuecomplete", function(file) {
+                this.on("queuecomplete", function (file) {
                     // Called when all files in the queue finish uploading.
                     window.location = "{{ url_for('predict') }}";
                 });
-            })
-        </script>
-        <div class="footer">
-            <h4 id="creator">University of Washington: Ubicomp Lab</h4>
-        </div>
+
+                this.on('error', function (file, errorMessage) {
+                    //alert(maxFilesize);
+                    //this.removeAllFiles();
+                    if (errorMessage.indexOf('File is too big') !== -1) {
+                        alert('i remove current file');
+
+                        // i remove current file
+                        drop.removeFile(file);
+                    }
+                });
+
+                this.on('addedfile', function () {
+                    document.getElementById('dropzone_submit').style.display = "block"
+                });
+            }
+        });
+
+        $('#dropzone_submit').click(function (e) {
+            e.preventDefault();
+            myDropzone.processQueue();
+        });
+    </script>
+    <div class="footer">
+        <h4 id="creator">University of Washington: Ubicomp Lab</h4>
+    </div>
 </body>
+
 </html>

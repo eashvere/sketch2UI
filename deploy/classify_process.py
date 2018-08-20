@@ -29,7 +29,7 @@ db = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=se
 
 tags = ['ButtonCircle', 'ButtonSquare', 'Text', 'TextInput', 'ImageView', 'RadioButton', 'CheckBox']
 
-model_path = "/Users/eash/Desktop/pytorch-faster-rcnn-master/vgg16_faster_rcnn_iter_60000.pth"
+model_path = "./models/vgg16_faster_rcnn_iter_60000.pth"
 
 def classify_process():
 

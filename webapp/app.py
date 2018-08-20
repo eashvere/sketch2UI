@@ -142,7 +142,7 @@ def predict():
         filenames_list = list()
         file_obj = request.files
         assert(file_obj is not None)
-        for k, f in file_obj.items():
+        for __, f in file_obj.items():
             if f and file_allowed(f.filename):
                 filename = secure_filename(f.filename)
                 filenames_list.append(filename)
@@ -153,7 +153,7 @@ def predict():
         for img_input in glob.glob(os.path.join(app.config['UPLOAD_FOLDER'], '*')):
             label, box = predict_result(img_input)
             label = np.array(label)
-            box = np.array(box)
+            box = np.array(box) #TODO Add more multi batch stuffies
             png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
             assert(png_output is not None)
             png_output_list.append(png_output.decode('utf-8'))
