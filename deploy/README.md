@@ -47,7 +47,7 @@ Go to the webapp folder and run
 python app.py
 ```
 
-The website will default to http://127.0.0.1:5000
+The website to connect to will default to `http://127.0.0.1:5000`
 
 ## Acknowledgement
 This repository refers to [jrosebr1/simple-keras-rest-api](https://github.com/jrosebr1/simple-keras-rest-api), and thank the author again.

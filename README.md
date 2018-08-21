@@ -8,7 +8,9 @@ Run pip install -r requirements.txt to install all the packages
 
 # Usage
 
-Run the files in each of the folders. Remember to follow instructions
+Read the readme's and follow the instructions
+
+Connect to `http://127.0.0.1:500` to access the web application
 
 # Compatibility
 
