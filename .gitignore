@@ -5,5 +5,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+*.pth
+*.pkl
+
+webapp/var/www/*
+!webapp/var/www/README.md
+
 instance/
 .webassets-cache

@@ -15,7 +15,7 @@ import glob
 import urllib.parse
 from bs4 import BeautifulSoup as Soup
 
-UPLOAD_FOLDER = 'var/www/uploads'
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads")
 EXTENSIONS = set(['jpg', 'png', 'jpeg'])
 png_output_list = None
 filenames_list = None
@@ -37,22 +37,14 @@ for extra_dir in extra_dirs:
                 extra_files.append(filename)
 
 def delete_files():
-    shutil.rmtree("var/www/downloads/json")
-    os.mkdir("var/www/downloads/json")
-    shutil.rmtree("var/www/downloads/xml")
-    os.mkdir("var/www/downloads/xml")
-    shutil.rmtree("var/www/downloads/zip")
-    os.mkdir("var/www/downloads/zip")
-    shutil.rmtree("var/www/uploads")
-    os.mkdir("var/www/uploads")
-
-def create_filename():
-    """Makes a filename that isn't a duplicate in a given directory"""
-    name = 0
-    while os.path.isfile('test/' + str(name) + '.jpg') is True:
-        name += 1
-    filename = str(name) + '.jpg'
-    return filename
+    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
+    os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
+    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
+    os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
+    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip"))
+    os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip"))
+    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads"))
+    os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads"))
 
 def predict_result(image_path):
     # Initialize image path
@@ -119,7 +111,7 @@ def about():
 def downloadjson():
     data = io.BytesIO()
     with zipfile.ZipFile(data, mode='w', compression=zipfile.ZIP_DEFLATED) as z:
-        for f_name in glob.glob('./var/www/downloads/json/*'):
+        for f_name in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)),'var/www/downloads/json/*')):
             z.write(f_name)
     data.seek(0)
     return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='json.zip')
@@ -128,7 +120,7 @@ def downloadjson():
 def xmls():
     data = io.BytesIO()
     with zipfile.ZipFile(data, mode='w', compression=zipfile.ZIP_DEFLATED) as z:
-        for f_name in glob.glob('./var/www/downloads/xml/*'):
+        for f_name in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)),'var/www/downloads/xml/*')):
             z.write(f_name)
     data.seek(0)
     return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='xml.zip')

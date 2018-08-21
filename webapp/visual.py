@@ -79,7 +79,7 @@ def create_plot(scores, boxes, im_file):
 
     j = plt.gcf()
 
-    with open('var/www/downloads/json/data.json', 'w') as outfile:  
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'var/www/downloads/json/data.json'), 'w') as outfile:  
         json.dump(data, outfile, indent=4)
 
     #j.savefig('./static/plot.png')
