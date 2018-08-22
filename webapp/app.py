@@ -36,7 +36,19 @@ for extra_dir in extra_dirs:
             if os.path.isfile(filename):
                 extra_files.append(filename)
 
-def delete_files():
+def create_var_folders():
+    if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads")) is not True:
+        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads"))
+    if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json")) is not True:
+        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
+    if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml")) is not True:
+        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
+    if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip")) is not True:
+        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip"))
+    if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads")) is not True:
+        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads"))
+
+def delete_folders():
     shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
     os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
     shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
@@ -72,7 +84,7 @@ def file_allowed(filename):
 
 @app.route("/")
 def home_screen():
-    delete_files()
+    delete_folders()
     return render_template('index.html')
 
 @app.route("/home_page")
@@ -161,5 +173,7 @@ if __name__ == '__main__':
     app.register_error_handler(403, page_forbidden)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(500, internal_server_error)
+
+    create_var_folders()
 
     app.run(debug=True, port=5000)
