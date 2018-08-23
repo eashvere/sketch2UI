@@ -47,7 +47,6 @@
         <div class="dz-message">
             Drop files here or click to upload.
         </div>
-        <button type="submit" id="dropzone_submit" class="btn btn-success btn-lg float-left" style="display: None; position: absolute;">Submit</button>
         <div class="fallback">
             <form action="/predict" id="form1" method="POST" enctype="multipart/form-data">
                 <div id="file-input-div">
@@ -80,6 +79,10 @@
             </form>
         </div>
     </form>
+
+    <div class="mx-auto" style="width:150px; margin-top:560px">
+        <button type="submit" id="dropzone_submit" class="btn btn-success" style="display:None">Submit</button>
+    </div>
 
     <script>
         Dropzone.autoDiscover = false;
@@ -116,7 +119,9 @@
                 });
 
                 this.on('addedfile', function () {
-                    document.getElementById('dropzone_submit').style.display = "block"
+                 
+                    document.getElementById('dropzone_submit').style.display = "block";
+                    
                 });
             }
         });
@@ -125,6 +130,7 @@
             e.preventDefault();
             myDropzone.processQueue();
         });
+
     </script>
     <div class="footer">
         <h4 id="creator">University of Washington: Ubicomp Lab</h4>
