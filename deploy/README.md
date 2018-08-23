@@ -31,12 +31,6 @@ redis-cli ping
 python run_pytorch_server.py 
 ```
 
-and in another command prompt
-
-```bash
-python classify_process.py
-```
-
 You can now access the REST API via `http://127.0.0.1:4000/predict`
 
 ## Submitting requests to pytorch server

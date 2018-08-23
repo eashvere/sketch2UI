@@ -23,6 +23,8 @@ from lib.nets.vgg16 import vgg16
 from lib.model.test import im_detect
 from helpers import base64_decode_image, base64_encode_image
 import settings
+from classify_process import start_classify
+from multiprocessing import Process
 
 # Initialize our Flask application and the PyTorch model.
 
@@ -106,10 +108,17 @@ def predict():
 	# return the data dictionary as a JSON response
 	return flask.jsonify(data)
 
+def start_server():
+	app.run(port=4000)
 
 if __name__ == '__main__':
-
-    print("* Starting model service...")
-    os.system("redis-cli flushall")
-
-    app.run(port=4000)
+	print("* Starting model service...")
+	os.system("redis-cli flushall")
+	
+	p1 = Process(target=start_server)
+	p1.start()
+	p2 = Process(target=start_classify)
+	p2.start()
+	p1.join()
+	p2.join()
+	#start_server()

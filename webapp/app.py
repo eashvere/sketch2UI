@@ -84,6 +84,12 @@ def file_allowed(filename):
 
 @app.route("/")
 def home_screen():
+    global png_output_list
+    global filenames_list
+
+    png_output_list = list()
+    filenames_list = list()
+
     delete_folders()
     return render_template('index.html')
 
@@ -142,8 +148,6 @@ def predict():
     global png_output_list
     global filenames_list
     if request.method == 'POST':
-        png_output_list = list()
-        filenames_list = list()
         file_obj = request.files
         assert(file_obj is not None)
         for __, f in file_obj.items():
@@ -158,10 +162,14 @@ def predict():
             label, box = predict_result(img_input)
             label = np.array(label)
             box = np.array(box) #TODO Add more multi batch stuffies
-            png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            png_output = create_plot(label, box, os.path.join(app.config['UPLOAD_FOLDER'], img_input))
             assert(png_output is not None)
             png_output_list.append(png_output.decode('utf-8'))
+            label = None
+            box = None
+            png_output = None
     
+   #print(png_output_list)
     return render_template('result.html', img_data=png_output_list, filenames=filenames_list, list_len=len(png_output_list))
 
 

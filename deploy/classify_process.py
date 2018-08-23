@@ -31,7 +31,7 @@ tags = ['ButtonCircle', 'ButtonSquare', 'Text', 'TextInput', 'ImageView', 'Radio
 
 model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models/vgg16_faster_rcnn_iter_60000.pth")
 
-def classify_process():
+def start_classify():
 
     model = load_model()
     print("Done LOADING!")
@@ -86,4 +86,4 @@ def load_model():
     return model
 
 if __name__ == '__main__':
-    classify_process()
+    start_classify()
