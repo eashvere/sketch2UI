@@ -43,8 +43,6 @@ def create_var_folders():
         os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
     if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml")) is not True:
         os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
-    if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip")) is not True:
-        os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip"))
     if os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads")) is not True:
         os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads"))
 
@@ -53,8 +51,6 @@ def delete_folders():
     os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/json"))
     shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
     os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/xml"))
-    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip"))
-    os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/downloads/zip"))
     shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads"))
     os.mkdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "var/www/uploads"))
 
@@ -128,18 +124,20 @@ def about():
 @app.route("/json")
 def downloadjson():
     data = io.BytesIO()
+    path_json = os.path.join(os.path.dirname(os.path.abspath(__file__)),'var/www/downloads/json')
     with zipfile.ZipFile(data, mode='w', compression=zipfile.ZIP_DEFLATED) as z:
-        for f_name in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)),'var/www/downloads/json/*')):
-            z.write(f_name)
+        for f_name in glob.glob(os.path.join(path_json, '*')):
+            z.write(f_name, os.path.join('json', os.path.basename(f_name)))
     data.seek(0)
     return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='json.zip')
 
-@app.route("/downloadxml")
+@app.route("/xml")
 def xmls():
     data = io.BytesIO()
+    path_xml = os.path.join(os.path.dirname(os.path.abspath(__file__)),'var/www/downloads/xml')
     with zipfile.ZipFile(data, mode='w', compression=zipfile.ZIP_DEFLATED) as z:
-        for f_name in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)),'var/www/downloads/xml/*')):
-            z.write(f_name)
+        for f_name in glob.glob(os.path.join(path_xml, '*')):
+            z.write(f_name, os.path.join('xml', os.path.basename(f_name)))
     data.seek(0)
     return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='xml.zip')
 
