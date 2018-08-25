@@ -295,8 +295,8 @@ body {
 
   .overlay-message{
     position: relative;
-    width: 270px;
-    height: 10px;
+    width: 248px;
+    height: 40px;
     background-color:#fff;
     opacity:1;
     z-index:1003;
