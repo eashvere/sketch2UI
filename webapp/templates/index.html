@@ -41,6 +41,12 @@
         </div>
     </div>
 
+    <div class="overlay"></div>
+    <div class="loader mx-auto" style="margin-top:200px;"></div>
+    <div class="overlay-message mx-auto" style="margin-top:50px;">
+        <p>Wait for around 20 seconds</p>
+    </div>
+
     <form action="/predict" class="dropzone dz-clickable container" id="my-dropzone" method="POST" enctype="multipart/form-data">
         <input type="file" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;"
             multiple>
@@ -87,6 +93,8 @@
     <script>
         Dropzone.autoDiscover = false;
 
+        $(".overlay, .loader, .overlay-message").hide();
+
         var myDropzone = new Dropzone('#my-dropzone', {
             maxFilesize: 3.0,
             maxFiles: 5,
@@ -119,14 +127,13 @@
                 });
 
                 this.on('addedfile', function () {
-                 
                     document.getElementById('dropzone_submit').style.display = "block";
-                    
                 });
             }
         });
 
         $('#dropzone_submit').click(function (e) {
+            $(".overlay, .loader, .overlay-message").show();
             e.preventDefault();
             myDropzone.processQueue();
         });
