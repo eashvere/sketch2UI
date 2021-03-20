@@ -1,6 +1,6 @@
 Flask==1.0.2
 gunicorn==19.9.0
-Jinja2==2.10
+Jinja2==2.11.3
 lmxl==4.2.1
 matplotlib==2.2.2
 numpy==1.14.3
