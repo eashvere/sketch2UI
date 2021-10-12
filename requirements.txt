@@ -4,7 +4,7 @@ Jinja2==2.10
 lmxl==4.2.1
 matplotlib==2.2.2
 numpy==1.14.3
-opencv-python==3.4.0.12
+opencv-python==4.2.0.32
 pandas==0.23.0
 Pillow==5.1.0
 redis==2.10.6
